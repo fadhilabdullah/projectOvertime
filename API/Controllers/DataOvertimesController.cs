@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using DataAccess.Context;
 using DataAccess.Models;
 using BusinessLogic.Service;
+using DataAccess.ViewModels;
 
 namespace API.Controllers
 {
@@ -31,96 +32,23 @@ namespace API.Controllers
         }
 
         // GET: api/DataOvertimes/5
-        [ResponseType(typeof(DataOvertime))]
-        public IHttpActionResult GetDataOvertime(int id)
+        public DataOvertime GetDataOvertime(int id)
         {
-            DataOvertime dataOvertime = db.DataOvertimes.Find(id);
-            if (dataOvertime == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(dataOvertime);
+            return iDataOvertimeService.Get(id);
         }
 
         // PUT: api/DataOvertimes/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutDataOvertime(int id, DataOvertime dataOvertime)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != dataOvertime.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(dataOvertime).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DataOvertimeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        
 
         // POST: api/DataOvertimes
-        [ResponseType(typeof(DataOvertime))]
-        public IHttpActionResult PostDataOvertime(DataOvertime dataOvertime)
+        public void InsertDataOvertime(DataOvertimeVM dataOvertimeVM)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.DataOvertimes.Add(dataOvertime);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = dataOvertime.Id }, dataOvertime);
+            iDataOvertimeService.Insert(dataOvertimeVM);
         }
 
         // DELETE: api/DataOvertimes/5
-        [ResponseType(typeof(DataOvertime))]
-        public IHttpActionResult DeleteDataOvertime(int id)
-        {
-            DataOvertime dataOvertime = db.DataOvertimes.Find(id);
-            if (dataOvertime == null)
-            {
-                return NotFound();
-            }
+        
 
-            db.DataOvertimes.Remove(dataOvertime);
-            db.SaveChanges();
-
-            return Ok(dataOvertime);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool DataOvertimeExists(int id)
-        {
-            return db.DataOvertimes.Count(e => e.Id == id) > 0;
-        }
+        
     }
 }

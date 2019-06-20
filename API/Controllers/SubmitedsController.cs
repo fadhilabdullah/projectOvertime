@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using DataAccess.Context;
 using DataAccess.Models;
 using BusinessLogic.Service;
+using DataAccess.ViewModels;
 
 namespace API.Controllers
 {
@@ -33,96 +34,21 @@ namespace API.Controllers
         }
 
         // GET: api/Submiteds/5
-        [ResponseType(typeof(Submited))]
-        public IHttpActionResult GetSubmited(int id)
+        public Submited GetSubmited(int id)
         {
-            Submited submited = db.Submiteds.Find(id);
-            if (submited == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(submited);
+            return iSubmitedService.Get(id);
         }
 
         // PUT: api/Submiteds/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutSubmited(int id, Submited submited)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            if (id != submited.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(submited).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SubmitedExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
 
         // POST: api/Submiteds
-        [ResponseType(typeof(Submited))]
-        public IHttpActionResult PostSubmited(Submited submited)
+        public void InsertSubmited(SubmitedVM submitedVM)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Submiteds.Add(submited);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = submited.Id }, submited);
+            iSubmitedService.Insert(submitedVM);
         }
 
         // DELETE: api/Submiteds/5
-        [ResponseType(typeof(Submited))]
-        public IHttpActionResult DeleteSubmited(int id)
-        {
-            Submited submited = db.Submiteds.Find(id);
-            if (submited == null)
-            {
-                return NotFound();
-            }
 
-            db.Submiteds.Remove(submited);
-            db.SaveChanges();
-
-            return Ok(submited);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool SubmitedExists(int id)
-        {
-            return db.Submiteds.Count(e => e.Id == id) > 0;
-        }
     }
 }
