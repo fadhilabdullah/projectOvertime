@@ -17,7 +17,7 @@ namespace API.Controllers
     public class DataOvertimesController : ApiController
     {
         private MyContext db = new MyContext();
-        public DataOvertimesController() { }   //----> Constructor
+        public DataOvertimesController() { }   //----> Constructor fcfcf
 
         private readonly IDataOvertimeService iDataOvertimeService;   //-------> Interface with Object
         public DataOvertimesController(IDataOvertimeService _iDataOvertimeService)
