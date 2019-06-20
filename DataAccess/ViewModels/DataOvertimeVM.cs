@@ -35,10 +35,9 @@ namespace DataAccess.ViewModels
 
         public DataOvertimeVM() { }
 
-        public  void Update(int id, double pay_overtime, DateTimeOffset start_overtime, DateTimeOffset end_overtime, string attachment_overtime, string description,
-                                string activity, int employee_id, int submited_id, int type_id)
+        public  void Update(double pay_overtime, DateTimeOffset start_overtime, DateTimeOffset end_overtime, string attachment_overtime, string description,
+                              string activity, int employee_id, int submited_id, int type_id)
         {
-            this.Id = id;
             this.Pay_Overtime = pay_overtime;
             this.Start_Overtime = start_overtime;
             this.End_Overtime = end_overtime;

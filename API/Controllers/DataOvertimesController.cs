@@ -38,17 +38,29 @@ namespace API.Controllers
         }
 
         // PUT: api/DataOvertimes/5
-        
+        public void PutUpdateDataOvertime(int id, DataOvertimeVM dataOvertimeVM)
+        {
+            iDataOvertimeService.Update(id, dataOvertimeVM);
+        }
 
         // POST: api/DataOvertimes
-        public void InsertDataOvertime(DataOvertimeVM dataOvertimeVM)
+        public HttpResponseMessage InsertDataOvertime(DataOvertimeVM dataOvertimeVM)
         {
-            iDataOvertimeService.Insert(dataOvertimeVM);
+            var messege = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+            var result = iDataOvertimeService.Insert(dataOvertimeVM);
+            if (result)
+            {
+                messege = Request.CreateResponse(HttpStatusCode.OK, dataOvertimeVM);
+            }
+            return messege;
         }
 
         // DELETE: api/DataOvertimes/5
-        
+        public void DeleteDataOvertime(int id)
+        {
+            iDataOvertimeService.Delete(id);
+        }
 
-        
+
     }
 }

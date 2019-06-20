@@ -40,13 +40,13 @@ namespace Common.Repository.Application
 
         public DataOvertime Get(int id)
         {
-            var get = myContext.DataOvertimes.Find(id);
+            var get = myContext.DataOvertimes.Include("Submited").Include("TypeOvertime").SingleOrDefault(x => x.Id == id);
             return get;
         }
 
         public List<DataOvertime> GetSearch(string values)
         {
-            var get = myContext.DataOvertimes.Include("TypeOvertime").Include("Submited").Where(x => (x.TypeOvertime.OvertimeType.Contains(values)|| (x.Submited.Name_Submited.Contains(values)) && x.IsDelete == false)).ToList();
+            var get = myContext.DataOvertimes.Include("Submited").Include("TypeOvertime").Where(x => (x.TypeOvertime.OvertimeType.Contains(values)|| (x.Submited.Name_Submited.Contains(values)) && x.IsDelete == false)).ToList();
             return get;
         }
 
@@ -80,34 +80,40 @@ namespace Common.Repository.Application
         public bool Update(int id, DataOvertimeVM dataOvertimeVM)
         {
             var put = Get(id);
-            if (put != null)
+            var getSubmited = myContext.Submiteds.Find(dataOvertimeVM.Submited_Id);
+            put.Submited = getSubmited;
+            var getType = myContext.TypeOvertimes.Find(dataOvertimeVM.Type_Id);
+            put.TypeOvertime = getType;
+            put.Update(id, dataOvertimeVM);
+            myContext.Entry(put).State = EntityState.Modified;
+            var result = myContext.SaveChanges();
+            if (result > 0)
             {
-                put.Update(id, dataOvertimeVM);
-                myContext.Entry(put).State = EntityState.Modified;
-                myContext.SaveChanges();
-                return true;
+                status = true;
             }
             else
             {
-                return false;
+                status = false;
             }
-            //var put = new DataOvertime(dataOvertimeVM);
-            //var getSubmitedId = myContext.Submiteds.Find(dataOvertimeVM.Submited_Id);
-            //put.Submited = getSubmitedId;
-            //var getTypeId = myContext.TypeOvertimes.Find(dataOvertimeVM.Type_Id);
-            //put.TypeOvertime = getTypeId;
-            //put.Update(dataOvertimeVM);
-            //myContext.Entry(put).State = EntityState.Modified;
-            //var result = myContext.SaveChanges();
-            //if (result > 0)
-            //{
-            //    status = true;
-            //}
-            //else
-            //{
-            //    status = false;
-            //}
-            //return status;
+            return status;
         }
+        //var put = new DataOvertime(dataOvertimeVM);
+        //var getSubmitedId = myContext.Submiteds.Find(dataOvertimeVM.Submited_Id);
+        //put.Submited = getSubmitedId;
+        //var getTypeId = myContext.TypeOvertimes.Find(dataOvertimeVM.Type_Id);
+        //put.TypeOvertime = getTypeId;
+        //put.Update(dataOvertimeVM);
+        //myContext.Entry(put).State = EntityState.Modified;
+        //var result = myContext.SaveChanges();
+        //if (result > 0)
+        //{
+        //    status = true;
+        //}
+        //else
+        //{
+        //    status = false;
+        //}
+        //return status;
     }
+    
 }

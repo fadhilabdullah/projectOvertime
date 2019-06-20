@@ -40,15 +40,27 @@ namespace API.Controllers
         }
 
         // PUT: api/Submiteds/5
-
+        public void PutUpdateSubmited(int id, SubmitedVM submitedVM)
+        {
+            iSubmitedService.Update(id, submitedVM);
+        }
 
         // POST: api/Submiteds
-        public void InsertSubmited(SubmitedVM submitedVM)
+        public HttpResponseMessage InsertSubmited(SubmitedVM submitedVM)
         {
-            iSubmitedService.Insert(submitedVM);
+            var messege = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+            var result = iSubmitedService.Insert(submitedVM);
+            if (result)
+            {
+                messege = Request.CreateResponse(HttpStatusCode.OK, submitedVM);
+            }
+            return messege;
         }
 
         // DELETE: api/Submiteds/5
-
+        public void DeleteSubmited(int id)
+        {
+            iSubmitedService.Delete(id);
+        }
     }
 }
