@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<head>
+
+</head>
+<body>
+    <div class="container-fluid">
+        @*class -----> bootstrap*@
+        <table class="table-hover table" id="tableDataOvertime">
+            <thead>
+                <tr>
+                    <th> No. </th>                                  @*untuk memanggil (class = .) memanggil (id = #) di dalam javascript*@
+                    <th> Name </th>
+                    <th>Pay</th>th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Attachment</th>
+                    <th>Description</th>
+                    <th>Activity</th>
+                    <th>Name Submited</th>
+                    <th>Type</th>
+                    <th> Action </th>
+                </tr>
+            </thead>
+            <tbody class="tbody"></tbody>
+        </table>
+    </div>
+</body>
+
+@section Scripts{
+        <script src="~/Content/jquery/jquery.min.js"></script>    
+        <script src="~/Content/sweetalert/sweetalert.min.js"></script>
+        <link href="~/Content/sweetalert/sweetalert.css" rel="stylesheet" />    
+        <script src="~/Content/datatables/jquery.dataTables.min.js"></script>    
+        <link href="~/Content/datatables/jquery.dataTables.min.css" rel="stylesheet" />
+        <script src="~/Scripts/Employee/DataOvertime/DataOvertimeScript.js"></script>
+        @Scripts.Render("~/bundles/jqueryval")    
+    }
+

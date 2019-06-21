@@ -3643,12 +3643,12 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Submiteds\Index.cshtml" />
     <Content Include="Views\DataOvertimes\Index.cshtml" />
+    <Content Include="Views\Shared\AdminLayout\_LayoutAdministrator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\scss\" />
     <Folder Include="Scripts\Manager\" />
-    <Folder Include="Views\Shared\AdminLayout\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
