@@ -28,39 +28,98 @@ namespace API.Controllers
         }
 
         // GET: api/Submiteds
-        public List<Submited> GetSubmiteds()
+        public HttpResponseMessage GetSubmiteds()
         {
-            return iSubmitedService.Get();
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
+                var result = iSubmitedService.Get();
+                if (result != null)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "500 : Internal Server Error");
+            }
         }
 
         // GET: api/Submiteds/5
-        public Submited GetSubmited(int id)
+        public HttpResponseMessage GetSubmited(int id)
         {
-            return iSubmitedService.Get(id);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
+                var result = iSubmitedService.Get(id);
+                if (result != null)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "500 : Internal Server Error");
+            }
         }
 
         // PUT: api/Submiteds/5
-        public void PutUpdateSubmited(int id, SubmitedVM submitedVM)
+        public HttpResponseMessage PutUpdateSubmited(int id, SubmitedVM submitedVM)
         {
-            iSubmitedService.Update(id, submitedVM);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
+                var result = iSubmitedService.Update(id, submitedVM);
+                if (result)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, submitedVM);
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "500 : Internal Server Error");
+            }
         }
 
         // POST: api/Submiteds
         public HttpResponseMessage InsertSubmited(SubmitedVM submitedVM)
         {
-            var messege = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
-            var result = iSubmitedService.Insert(submitedVM);
-            if (result)
+            try
             {
-                messege = Request.CreateResponse(HttpStatusCode.OK, submitedVM);
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
+                var result = iSubmitedService.Insert(submitedVM);
+                if (result)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, submitedVM);
+                }
+                return message;
             }
-            return messege;
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "500 : Internal Server Error");
+            }
         }
 
         // DELETE: api/Submiteds/5
-        public void DeleteSubmited(int id)
+        public HttpResponseMessage DeleteSubmited(int id)
         {
-            iSubmitedService.Delete(id);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
+                var result = iSubmitedService.Delete(id);
+                if (result)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, "200 : OK (Data Deleted)");
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "500 : Internal Server Error");
+            }
         }
     }
 }

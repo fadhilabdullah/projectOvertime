@@ -26,39 +26,98 @@ namespace API.Controllers
             iDataOvertimeService = _iDataOvertimeService;
         }
         // GET: api/DataOvertimes
-        public List<DataOvertime> GetDataOvertimes()
+        public HttpResponseMessage GetDataOvertimes()
         {
-            return iDataOvertimeService.Get();
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
+                var result = iDataOvertimeService.Get();
+                if (result != null)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "500 : Internal Server Error");
+            }
         }
 
         // GET: api/DataOvertimes/5
-        public DataOvertime GetDataOvertime(int id)
+        public HttpResponseMessage GetDataOvertime(int id)
         {
-            return iDataOvertimeService.Get(id);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
+                var result = iDataOvertimeService.Get(id);
+                if (result != null)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "500 : Internal Server Error");
+            }
         }
 
         // PUT: api/DataOvertimes/5
-        public void PutUpdateDataOvertime(int id, DataOvertimeVM dataOvertimeVM)
+        public HttpResponseMessage PutUpdateDataOvertime(int id, DataOvertimeVM dataOvertimeVM)
         {
-            iDataOvertimeService.Update(id, dataOvertimeVM);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
+                var result = iDataOvertimeService.Update(id, dataOvertimeVM);
+                if (result)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, dataOvertimeVM);
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "500 : Internal Server Error");
+            }
         }
 
         // POST: api/DataOvertimes
         public HttpResponseMessage InsertDataOvertime(DataOvertimeVM dataOvertimeVM)
         {
-            var messege = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
-            var result = iDataOvertimeService.Insert(dataOvertimeVM);
-            if (result)
+            try
             {
-                messege = Request.CreateResponse(HttpStatusCode.OK, dataOvertimeVM);
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
+                var result = iDataOvertimeService.Insert(dataOvertimeVM);
+                if (result)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, dataOvertimeVM);
+                }
+                return message;
             }
-            return messege;
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "500 : Internal Server Error");
+            }
         }
 
         // DELETE: api/DataOvertimes/5
-        public void DeleteDataOvertime(int id)
+        public HttpResponseMessage DeleteDataOvertime(int id)
         {
-            iDataOvertimeService.Delete(id);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
+                var result = iDataOvertimeService.Delete(id);
+                if (result)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, "200 : OK (Data Deleted)");
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "500 : Internal Server Error");
+            }
         }
 
 
