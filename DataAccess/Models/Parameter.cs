@@ -25,7 +25,6 @@ namespace DataAccess.Models
         public Parameter() { }
         public void Update(ParameterVM parameterVM)
         {
-            this.Id = parameterVM.Id;
             this.Long_Time = parameterVM.Long_Time;
             this.Pay = parameterVM.Pay;
             this.UpdateDate = DateTimeOffset.Now.LocalDateTime;

@@ -68,12 +68,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{6DDF8D19-FB48-485E-A8C8-C2A84BCDD42C}</Project>
+      <Project>{6ddf8d19-fb48-485e-a8c8-c2a84bcdd42c}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{e855f2ce-1150-4d0d-93c4-b11dd6b9b005}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
-      <Project>{A947AA95-C520-46A2-BB0C-6E6C18615D27}</Project>
+      <Project>{a947aa95-c520-46a2-bb0c-6e6c18615d27}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
   </ItemGroup>

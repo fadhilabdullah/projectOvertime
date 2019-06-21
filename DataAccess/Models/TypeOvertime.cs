@@ -21,9 +21,13 @@ namespace DataAccess.Models
         public TypeOvertime() { }
         public void Update(TypeOvertimeVM typeovertimeVM)
         {
-            this.Id = typeovertimeVM.Id;
             this.OvertimeType = typeovertimeVM.OvertimeType;
             this.UpdateDate = DateTimeOffset.Now.LocalDateTime;
+        }
+        public void Delete()
+        {
+            this.IsDelete = true;
+            this.DeleteDate = DateTimeOffset.Now.LocalDateTime;
         }
     }
 }

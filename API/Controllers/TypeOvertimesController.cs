@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using DataAccess.Context;
 using DataAccess.Models;
 using BusinessLogic.Service;
+using DataAccess.ViewModels;
 
 namespace API.Controllers
 {
@@ -26,102 +27,39 @@ namespace API.Controllers
             iTypeOvertimeService = _iTypeOvertimeService;
         }
 
-        public List<TypeOvertime> GetParameter()
+        public List<TypeOvertime> GetTypeOvertimes()
         {
             return iTypeOvertimeService.Get();
         }
 
         // GET: api/TypeOvertimes/5
-        [ResponseType(typeof(TypeOvertime))]
-        public IHttpActionResult GetTypeOvertime(int id)
+        public TypeOvertime GetTypeOvertime(int id)
         {
-            TypeOvertime typeOvertime = db.TypeOvertimes.Find(id);
-            if (typeOvertime == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(typeOvertime);
+            return iTypeOvertimeService.Get(id);
         }
 
         // PUT: api/TypeOvertimes/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutTypeOvertime(int id, TypeOvertime typeOvertime)
+        public void PutUpdateTypeOvertime(int id, TypeOvertimeVM typeovertimeVM)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != typeOvertime.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(typeOvertime).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TypeOvertimeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            iTypeOvertimeService.Update(id, typeovertimeVM);
         }
 
         // POST: api/TypeOvertimes
-        [ResponseType(typeof(TypeOvertime))]
-        public IHttpActionResult PostTypeOvertime(TypeOvertime typeOvertime)
+        public HttpResponseMessage InsertTypeOvertime(TypeOvertimeVM typeovertimeVM)
         {
-            if (!ModelState.IsValid)
+            var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+            var result = iTypeOvertimeService.Insert(typeovertimeVM);
+            if (result)
             {
-                return BadRequest(ModelState);
+                message = Request.CreateResponse(HttpStatusCode.OK, typeovertimeVM);
             }
-
-            db.TypeOvertimes.Add(typeOvertime);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = typeOvertime.Id }, typeOvertime);
+            return message;
         }
 
         // DELETE: api/TypeOvertimes/5
-        [ResponseType(typeof(TypeOvertime))]
-        public IHttpActionResult DeleteTypeOvertime(int id)
+        public void DeleteTypeOvertime(int id)
         {
-            TypeOvertime typeOvertime = db.TypeOvertimes.Find(id);
-            if (typeOvertime == null)
-            {
-                return NotFound();
-            }
-
-            db.TypeOvertimes.Remove(typeOvertime);
-            db.SaveChanges();
-
-            return Ok(typeOvertime);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool TypeOvertimeExists(int id)
-        {
-            return db.TypeOvertimes.Count(e => e.Id == id) > 0;
+            iTypeOvertimeService.Delete(id);
         }
     }
 }

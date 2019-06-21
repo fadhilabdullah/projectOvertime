@@ -53,9 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\MyContext.cs" />
-    <Compile Include="Migrations\201906191042552_addingDatabase.cs" />
-    <Compile Include="Migrations\201906191042552_addingDatabase.Designer.cs">
-      <DependentUpon>201906191042552_addingDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201906200333042_AddingDatabase.cs" />
+    <Compile Include="Migrations\201906200333042_AddingDatabase.Designer.cs">
+      <DependentUpon>201906200333042_AddingDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataOvertime.cs" />
@@ -80,8 +80,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906191042552_addingDatabase.resx">
-      <DependentUpon>201906191042552_addingDatabase.cs</DependentUpon>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201906200333042_AddingDatabase.resx">
+      <DependentUpon>201906200333042_AddingDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
