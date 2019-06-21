@@ -23,21 +23,69 @@ namespace API.Controllers
         }
 
         // GET: api/Parameter
-        public List<Parameter> GetParameter()
+        public HttpResponseMessage GetParameter()
         {
-            return iParameterService.Get();
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                var result = iParameterService.Get();
+                if (result != null)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
 
         // GET: api/Parameter/5
-        public Parameter GetParameter(int id)
+        public HttpResponseMessage GetParameter(int id)
         {
-            return iParameterService.Get(id);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                var result = iParameterService.Get(id);
+                if (result != null)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
 
         // PUT: api/Parameter/5
-        public void PutUpdateParameter(int id, ParameterVM parameterVM)
+        public HttpResponseMessage PutUpdateParameter(int id, ParameterVM parameterVM)
         {
-            iParameterService.Update(id, parameterVM);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+
+                var getParameter = db.Parameters.Find(id);
+                if (getParameter == null)
+                {
+                    message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                }
+                else
+                {
+                    var result = iParameterService.Update(id, parameterVM);
+                    if (result)
+                    {
+                        message = Request.CreateResponse(HttpStatusCode.NoContent, "No Content");
+                    }
+                }
+                return message;
+            }
+            catch(Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
 
         // POST: api/Parameter
@@ -47,16 +95,38 @@ namespace API.Controllers
             var result = iParameterService.Insert(parameterVM);
             if (result)
             {
-                message = Request.CreateResponse(HttpStatusCode.OK, parameterVM);
+                message = Request.CreateResponse(HttpStatusCode.OK, "OK");
             }
             return message;
         }
         
 
         // DELETE: api/Parameter/5
-        public void DeleteParameter(int id)
+        public HttpResponseMessage DeleteParameter(int id)
         {
-            iParameterService.Delete(id);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+
+                var getParameter = db.Parameters.Find(id);
+                if (getParameter == null)
+                {
+                    message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                }
+                else
+                {
+                    var result = iParameterService.Delete(id);
+                    if (result)
+                    {
+                        message = Request.CreateResponse(HttpStatusCode.NoContent, "No Content");
+                    }
+                }
+                return message;
+            }
+            catch(Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
     }
 }

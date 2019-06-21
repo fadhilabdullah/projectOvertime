@@ -27,21 +27,69 @@ namespace API.Controllers
             iTypeOvertimeService = _iTypeOvertimeService;
         }
 
-        public List<TypeOvertime> GetTypeOvertimes()
+        public HttpResponseMessage GetTypeOvertimes()
         {
-            return iTypeOvertimeService.Get();
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                var result = iTypeOvertimeService.Get();
+                if (result != null)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return message;
+            }
+            catch(Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
 
         // GET: api/TypeOvertimes/5
-        public TypeOvertime GetTypeOvertime(int id)
+        public HttpResponseMessage GetTypeOvertime(int id)
         {
-            return iTypeOvertimeService.Get(id);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                var result = iTypeOvertimeService.Get(id);
+                if (result != null)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
 
         // PUT: api/TypeOvertimes/5
-        public void PutUpdateTypeOvertime(int id, TypeOvertimeVM typeovertimeVM)
+        public HttpResponseMessage PutUpdateTypeOvertime(int id, TypeOvertimeVM typeovertimeVM)
         {
-            iTypeOvertimeService.Update(id, typeovertimeVM);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+
+                var getTypeOvertime = db.TypeOvertimes.Find(id);
+                if (getTypeOvertime == null)
+                {
+                    message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                }
+                else
+                {
+                    var result = iTypeOvertimeService.Update(id, typeovertimeVM);
+                    if (result)
+                    {
+                        message = Request.CreateResponse(HttpStatusCode.NoContent, "No Content");
+                    }
+                }
+                return message;
+            }
+            catch(Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
 
         // POST: api/TypeOvertimes
@@ -57,9 +105,31 @@ namespace API.Controllers
         }
 
         // DELETE: api/TypeOvertimes/5
-        public void DeleteTypeOvertime(int id)
+        public HttpResponseMessage DeleteTypeOvertime(int id)
         {
-            iTypeOvertimeService.Delete(id);
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+
+                var getTypeOvertime = db.TypeOvertimes.Find(id);
+                if (getTypeOvertime == null)
+                {
+                    message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                }
+                else
+                {
+                    var result = iTypeOvertimeService.Delete(id);
+                    if (result)
+                    {
+                        message = Request.CreateResponse(HttpStatusCode.NoContent, "No Content");
+                    }
+                }
+                return message;
+            }
+            catch
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
     }
 }
