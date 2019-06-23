@@ -18,6 +18,7 @@ function LoadIndexDataOvertime() {
                 html += '<tr>';
                 html += '<td>' + i + '</td>';
                 html += '<td>' + val.Name_Submited + '</td>';
+                html += '<td>' + val.Status + '</td>';
                 html += '<td>' + '<a haref="#" class="fa fa-pencil" onclick=return GetById(' + val.Id + ')">Edit</a>';              //line 21 dan 22 untuk kolom action di table
                 html += ' | <a href="#" class="fa fa-trash" onclick=return Delete(' + val.Id + ')">Delete</a></td>';
                 html += '</tr>';

@@ -1,17 +1,16 @@
 ﻿$(document).ready(function () {
-    LoadIndexSubmited();
+    LoadIndexDataOvertime();
     $('#table').DataTable({
-        "ajax": LoadIndexSubmited()
+        "ajax": LoadIndexDataOvertime()
     });
 })
 
 function Save() {
-    var submited = new Object();
-    submited.name = $('#Name').val();
-    submited.status = $('#Status').val();
+    var DataOvertime = new Object();
+    DataOvertime.name = $('#Name').val();
     $.ajax({
-        url: "/Submiteds/InsertOrUpdate/",
-        data: submited,
+        url: "/DataOvertimes/InsertOrUpdate/",
+        data: DataOvertime,
         success: function (result) {
             swal({
                 title: "Saved!",
@@ -19,20 +18,20 @@ function Save() {
                 type: "success"
             },
             function () {
-                window.location.href = '/Submiteds/Index/';
+                window.location.href = '/DataOvertimes/Index/';
             });
-            LoadIndexSubmited();
+            LoadIndexDataOvertime();
             $('#myModal').modal('hide');
             ClearScreen();
         }
     });
 };
 
-function LoadIndexSubmited() {
+function LoadIndexDataOvertime() {
     $.ajax({
         type: "GET",
         async: false,
-        url: "/Submiteds/LoadSubmited/",
+        url: "/DataOvertimes/LoadDataOvertime/",
         dateType: "json",
         success: function (data) {
             var html = '';
@@ -40,8 +39,7 @@ function LoadIndexSubmited() {
             $.each(data, function (index, val) {
                 html += '<tr>';
                 html += '<td>' + i + '</td>';
-                html += '<td>' + val.Name_Submited + '</td>';
-                html += '<td>' + val.Status + '</td>';
+                html += '<td>' + val.Employee.Name + '</td>';
                 html += '<td> <a href="#" class="fa fa-pencil" onclick="return GetById(' + val.Id + ')"></a>';
                 html += ' | <a href="#" class="fa fa-trash" onclick="return Delete(' + val.Id + ')"></a></td>';
                 html += '</tr>';
@@ -53,13 +51,12 @@ function LoadIndexSubmited() {
 }
 
 function Edit() {
-    var submited = new Object();
-    submited.id = $('#Id').val();
-    submited.name = $('#Name').val();
-    submited.status = $('#Status').val();
+    var DataOvertime = new Object();
+    DataOvertime.id = $('#Id').val();
+    DataOvertime.name = $('#Name').val();
     $.ajax({
-        url: "/Submiteds/InsertOrUpdate/",
-        data: submited,
+        url: "/DataOvertimes/InsertOrUpdate/",
+        data: DataOvertime,
         success: function (result) {
             swal({
                 title: "Saved!",
@@ -67,9 +64,9 @@ function Edit() {
                 type: "success"
             },
             function () {
-                window.location.href = '/Submiteds/Index/';
+                window.location.href = '/DataOvertimes/Index/';
             });
-            LoadIndexSubmited();
+            LoadIndexDataOvertime();
             $('#myModal').modal('hide');
             ClearScreen();
         }
@@ -78,14 +75,21 @@ function Edit() {
 
 function GetById(Id) {
     $.ajax({
-        url: "/Submiteds/GetById/",
+        url: "/DataOvertimes/GetById/",
         type: "GET",
         dataType: "json",
         data: { id: Id },
         success: function (result) {
             $('#Id').val(result.Id);
-            $('#Name').val(result.Name_Submited);
-            $('#Status').val(result.Status);
+            $('#Name').val(result.Employee.Name);
+            $('#Pay').val(result.Pay_Overtime);
+            $('#Start').val(result.Start_Overtime);
+            $('#End').val(result.End_Overtime);
+            $('#Attachment').val(result.Attachment_Overtime);
+            $('#Description').val(result.Description);
+            $('#Activity').val(result.Activity);
+            $('#Submited').val(result.Submited.Name_Submited);
+            $('#Type').val(result.TypeOvertime.OvertimeType);
 
             $('#myModal').modal('show');
             $('#Update').show();
@@ -105,7 +109,7 @@ function Delete(Id) {
         closeOnConfirm: false
     }, function () {
         $.ajax({
-            url: "/Submiteds/Delete/",
+            url: "/DataOvertimes/Delete/",
             data: { id: Id },
             success: function (response) {
                 swal({
@@ -114,7 +118,7 @@ function Delete(Id) {
                     type: "success"
                 },
                     function () {
-                        window.location.href = '/Submiteds/Index/';
+                        window.location.href = '/DataOvertimes/Index/';
                     });
             },
             error: function (response) {
