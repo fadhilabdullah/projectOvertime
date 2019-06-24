@@ -91,13 +91,20 @@ namespace API.Controllers
         // POST: api/Parameter
         public HttpResponseMessage InsertParameter(ParameterVM parameterVM)
         {
-            var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
-            var result = iParameterService.Insert(parameterVM);
-            if (result)
+            try
             {
-                message = Request.CreateResponse(HttpStatusCode.OK, "OK");
+                var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+                var result = iParameterService.Insert(parameterVM);
+                if (result)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, "OK");
+                }
+                return message;
             }
-            return message;
+            catch(Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
         
 

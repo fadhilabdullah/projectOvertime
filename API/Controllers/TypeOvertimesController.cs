@@ -95,13 +95,20 @@ namespace API.Controllers
         // POST: api/TypeOvertimes
         public HttpResponseMessage InsertTypeOvertime(TypeOvertimeVM typeovertimeVM)
         {
-            var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
-            var result = iTypeOvertimeService.Insert(typeovertimeVM);
-            if (result)
+            try
             {
-                message = Request.CreateResponse(HttpStatusCode.OK, typeovertimeVM);
+                var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+                var result = iTypeOvertimeService.Insert(typeovertimeVM);
+                if (result)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, "OK");
+                }
+                return message;
             }
-            return message;
+            catch(Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
 
         // DELETE: api/TypeOvertimes/5
