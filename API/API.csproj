@@ -276,6 +276,7 @@
     <Compile Include="Controllers\DataOvertimesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParameterController.cs" />
+    <Compile Include="Controllers\StatusesController.cs" />
     <Compile Include="Controllers\SubmitedsController.cs" />
     <Compile Include="Controllers\TypeOvertimesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

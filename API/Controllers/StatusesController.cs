@@ -15,23 +15,23 @@ using DataAccess.ViewModels;
 
 namespace API.Controllers
 {
-    public class DataOvertimesController : ApiController
+    public class StatusesController : ApiController
     {
         private MyContext db = new MyContext();
-        public DataOvertimesController() { }   //----> Constructor fcfcf
 
-        private readonly IDataOvertimeService iDataOvertimeService;   //-------> Interface with Object
-        public DataOvertimesController(IDataOvertimeService _iDataOvertimeService)
+        public StatusesController() { }
+        private readonly IStatusService iStatusService;
+        public StatusesController(IStatusService _iStatusService)
         {
-            iDataOvertimeService = _iDataOvertimeService;
+            iStatusService = _iStatusService;
         }
-        // GET: api/DataOvertimes
-        public HttpResponseMessage GetDataOvertimes()
+        // GET: api/Statuses
+        public HttpResponseMessage GetStatuses()
         {
             try
             {
                 var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
-                var result = iDataOvertimeService.Get();
+                var result = iStatusService.Get();
                 if (result != null)
                 {
                     message = Request.CreateResponse(HttpStatusCode.OK, result);
@@ -44,13 +44,13 @@ namespace API.Controllers
             }
         }
 
-        // GET: api/DataOvertimes/5
-        public HttpResponseMessage GetDataOvertime(int id)
+        // GET: api/Statuses/5
+        public HttpResponseMessage GetStatus(int id)
         {
             try
             {
                 var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
-                var result = iDataOvertimeService.Get(id);
+                var result = iStatusService.Get(id);
                 if (result != null)
                 {
                     message = Request.CreateResponse(HttpStatusCode.OK, result);
@@ -63,16 +63,16 @@ namespace API.Controllers
             }
         }
 
-        // PUT: api/DataOvertimes/5
-        public HttpResponseMessage PutUpdateDataOvertime(int id, DataOvertimeVM dataOvertimeVM)
+        // PUT: api/Statuses/5
+        public HttpResponseMessage PutUpdateStatus(int id, StatusVM statusVM)
         {
             try
             {
                 var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
-                var result = iDataOvertimeService.Update(id, dataOvertimeVM);
+                var result = iStatusService.Update(id, statusVM);
                 if (result)
                 {
-                    message = Request.CreateResponse(HttpStatusCode.OK, dataOvertimeVM);
+                    message = Request.CreateResponse(HttpStatusCode.OK, statusVM);
                 }
                 return message;
             }
@@ -82,16 +82,16 @@ namespace API.Controllers
             }
         }
 
-        // POST: api/DataOvertimes
-        public HttpResponseMessage InsertDataOvertime(DataOvertimeVM dataOvertimeVM)
+        // POST: api/Statuses
+        public HttpResponseMessage InsertStatus(StatusVM statusVM)
         {
             try
             {
                 var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
-                var result = iDataOvertimeService.Insert(dataOvertimeVM);
+                var result = iStatusService.Insert(statusVM);
                 if (result)
                 {
-                    message = Request.CreateResponse(HttpStatusCode.OK, dataOvertimeVM);
+                    message = Request.CreateResponse(HttpStatusCode.OK, statusVM);
                 }
                 return message;
             }
@@ -101,33 +101,17 @@ namespace API.Controllers
             }
         }
 
-        // DELETE: api/DataOvertimes/5
-        public HttpResponseMessage DeleteDataOvertime(int id)
+        // DELETE: api/Statuses/5
+        public HttpResponseMessage DeleteStatus(int id)
         {
             try
             {
                 var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not Found");
-                var result = iDataOvertimeService.Delete(id);
+                var result = iStatusService.Delete(id);
                 if (result)
                 {
                     message = Request.CreateResponse(HttpStatusCode.OK, "200 : OK (Data Deleted)");
                 }
-                return message;
-            }
-            catch (Exception e)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "500 : Internal Server Error");
-            }
-        }
-
-        //DROP DOWN
-        public HttpResponseMessage GetTypeModel(string modelQuery)
-        {
-            try
-            {
-                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "404 : Data Not FOund");
-                var result = iDataOvertimeService.GetTypeModule(modelQuery);
-                if (result != null) message = Request.CreateResponse(HttpStatusCode.OK, result);
                 return message;
             }
             catch (Exception e)

@@ -40,11 +40,7 @@ namespace BusinessLogic.Service.Application
             if (string.IsNullOrWhiteSpace(submitedVM.Name_Submited))
             {
                 return status;
-            }
-            else if (string.IsNullOrWhiteSpace(Convert.ToString(submitedVM.Status)))
-            {
-                return status;
-            }
+            }            
             else
             {
                 return submited.Insert(submitedVM);
@@ -56,11 +52,7 @@ namespace BusinessLogic.Service.Application
             if (string.IsNullOrWhiteSpace(submitedVM.Name_Submited))
             {
                 return status;
-            }
-            else if (string.IsNullOrWhiteSpace(submitedVM.Status))
-            {
-                return status;
-            }
+            }            
             else
             {
                 return submited.Update(id, submitedVM);

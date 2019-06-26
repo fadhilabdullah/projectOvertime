@@ -53,23 +53,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\MyContext.cs" />
-    <Compile Include="Migrations\201906191042552_addingDatabase.cs" />
-    <Compile Include="Migrations\201906191042552_addingDatabase.Designer.cs">
-      <DependentUpon>201906191042552_addingDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201906250631358_addingDatabase.cs" />
+    <Compile Include="Migrations\201906250631358_addingDatabase.Designer.cs">
+      <DependentUpon>201906250631358_addingDatabase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906200258402_addingDatabase1.cs" />
-    <Compile Include="Migrations\201906200258402_addingDatabase1.Designer.cs">
-      <DependentUpon>201906200258402_addingDatabase1.cs</DependentUpon>
+    <Compile Include="Migrations\201906250637198_updateParameter.cs" />
+    <Compile Include="Migrations\201906250637198_updateParameter.Designer.cs">
+      <DependentUpon>201906250637198_updateParameter.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataOvertime.cs" />
     <Compile Include="Models\Parameter.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Submited.cs" />
     <Compile Include="Models\TypeOvertime.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DataOvertimeVM.cs" />
     <Compile Include="ViewModels\ParameterVM.cs" />
+    <Compile Include="ViewModels\StatusVM.cs" />
     <Compile Include="ViewModels\SubmitedVM.cs" />
     <Compile Include="ViewModels\TypeOvertimeVM.cs" />
   </ItemGroup>
@@ -84,11 +86,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906191042552_addingDatabase.resx">
-      <DependentUpon>201906191042552_addingDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906250631358_addingDatabase.resx">
+      <DependentUpon>201906250631358_addingDatabase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906200258402_addingDatabase1.resx">
-      <DependentUpon>201906200258402_addingDatabase1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906250637198_updateParameter.resx">
+      <DependentUpon>201906250637198_updateParameter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

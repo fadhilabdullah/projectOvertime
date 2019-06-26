@@ -1,17 +1,17 @@
 ﻿$(document).ready(function () {
-    LoadIndexSubmited();
+    LoadIndexStatuse();
     $('#table').DataTable({
-        "ajax": LoadIndexSubmited()
+        "ajax": LoadIndexStatuses()
     });
 })
 
 function Save() {
-    var Submited = new Object();
-    Submited.Name_Submited = $('#Name').val();
-    Submited.Status = $('#Status').val();
+    var Status = new Object();
+    Status.Name_Status = $('#Name').val();
+    Status.Status = $('#Status').val();
     $.ajax({
-        url: "/Submiteds/InsertOrUpdate/",
-        data: Submited,
+        url: "/Statuses/InsertOrUpdate/",
+        data: Status,
         success: function (result) {
             swal({
                 title: "Saved!",
@@ -19,20 +19,20 @@ function Save() {
                 type: "success"
             },
             function () {
-                window.location.href = '/Submiteds/Index/';
+                window.location.href = '/Statuses/Index/';
             });
-            LoadIndexSubmited();
+            LoadIndexStatuses();
             $('#myModal').modal('hide');
             ClearScreen();
         }
     });
 };
 
-function LoadIndexSubmited() {
+function LoadIndexStatuses() {
     $.ajax({
         type: "GET",
         async: false,
-        url: "/Submiteds/LoadSubmited/",
+        url: "/Statuses/LoadStatus/",
         dateType: "json",
         success: function (data) {
             var html = '';
@@ -40,7 +40,7 @@ function LoadIndexSubmited() {
             $.each(data, function (index, val) {
                 html += '<tr>';
                 html += '<td>' + i + '</td>';
-                html += '<td>' + val.Name_Submited + '</td>';
+                html += '<td>' + val.Name_Status + '</td>';
                 html += '<td>' + val.Status + '</td>';
                 html += '<td><a href="#" class="fa fa-pencil" onclick="return GetById(' + val.Id + ')">Edit</a>';
                 html += ' | <a href="#" class="fa fa-trash" onclick="return Delete(' + val.Id + ')">Delete</a></td>';
@@ -52,27 +52,14 @@ function LoadIndexSubmited() {
     });
 }
 
-function LoadSubmitedCombo() {
-    $.ajax({
-        url: 'http://localhost:2284/API/Submiteds',
-        dataType: 'json',
-        success: function (result) {
-            var submited = $('#Submiteds');
-            $.each(result, function (i, Submited) {
-                $("<option></option>").val(Submited.Id).text(Submited.Status).appendTo(submited);
-            });
-        }
-    });
-}
-
 function Edit() {
-    var submited = new Object();
-    submited.id = $('#Id').val();
-    submited.Name_Submited = $('#Name').val();
-    submited.status = $('#Status').val();
+    var Status = new Object();
+    Status.id = $('#Id').val();
+    Status.Name_Status = $('#Name').val();
+    Status.status = $('#Status').val();
     $.ajax({
-        url: "/Submiteds/InsertOrUpdate/",
-        data: submited,
+        url: "/Statuses/InsertOrUpdate/",
+        data: Status,
         success: function (result) {
             swal({
                 title: "Saved!",
@@ -80,9 +67,9 @@ function Edit() {
                 type: "success"
             },
             function () {
-                window.location.href = '/Submiteds/Index/';
+                window.location.href = '/Statuses/Index/';
             });
-            LoadIndexSubmited();
+            LoadIndexStatus();
             $('#myModal').modal('hide');
             ClearScreen();
         }
@@ -91,13 +78,13 @@ function Edit() {
 
 function GetById(Id) {
     $.ajax({
-        url: "/Submiteds/GetById/",
+        url: "/Statuses/GetById/",
         type: "GET",
         dataType: "json",
         data: { id: Id },
         success: function (result) {
             $('#Id').val(result.Id);
-            $('#Name').val(result.Name_Submited);
+            $('#Name').val(result.Name_Status);
             $('#Status').val(result.Status);
 
             $('#myModal').modal('show');
@@ -121,7 +108,7 @@ function Delete(Id) {
         closeOnConfirm: false
     }, function () {
         $.ajax({
-            url: "/Submiteds/Delete/",
+            url: "/Statuses/Delete/",
             data: { id: Id },
             success: function (response) {
                 swal({
@@ -130,7 +117,7 @@ function Delete(Id) {
                     type: "success"
                 },
                     function () {
-                        window.location.href = '/Submiteds/Index/';
+                        window.location.href = '/Statuses/Index/';
                     });
             },
             error: function (response) {

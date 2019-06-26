@@ -1,23 +1,23 @@
 ﻿
 @{
-   Layout =  "~/Views/Shared/_LayoutAdministrator.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdministrator.cshtml";
 }
 
 <head>
 
 </head>
 <body>
-    <div class="container-fluid">                                  @*class -----> bootstrap*@
+    <div class="container-fluid">
+        @*class -----> bootstrap*@
         <hr />
         <button type="button" id="Create" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="ClearScreen();">Create New</button><br /><br />
-        @*<input type="text" class="form-control" id="cmbStatus" placeholder="Search" onchange="LoadSubmitedCombo()" />*@
+        <input type="text" class="form-control" id="cmbStatus" placeholder="Search" onchange="LoadTypeOvertimeCombo()" />
         @*<select id="cmbStatus" data-placement="Status" class="form-control" onchange="GetById()"></select>*@
-        <table class="table table-hover" id="TableSubmited">
+        <table class="table-hover table" id="TypeOvertime">
             <thead>
                 <tr>
                     <th> No. </th>                                  @*untuk memanggil (class = .) memanggil (id = #) di dalam javascript*@
-                    <th> Name </th>
-                    <th> Status </th>
+                    <th> OvertimeType </th>
                     <th> Action </th>
                 </tr>
             </thead>
@@ -29,7 +29,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h4 class="modal-title" id="myModalLabel">Submited Form</h4>
+                    <h4 class="modal-title" id="myModalLabel">TypeOvertime Form</h4>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -38,15 +38,8 @@
                             <input type="text" class="form-control" id="Id" placeholder="Id" disabled="disabled" />
                         </div>
                         <div class="form-group">
-                            <label for="Name">Name</label>
+                            <label for="Name">OvertimeType</label>
                             <input type="text" class="form-control" id="Name" placeholder="Name" />
-                        </div>
-                        <div class="form-group">
-                            <label for="Status">Status</label>
-                            @*<select id="Submit" data-placement="Choose" class="form-control" onchange="GetById()"></select>*@
-                            <input type="text" class="form-control" id="Status" placeholder="Status" />
-                            @*<input type="text" class="form-control" id="cmbStatus" placeholder="Name" onchange="GetByStock()" />*@
-                            @*<select id="cmbStatus" data-placement="Status" class="form-control" onchange="GetById()"></select>*@
                         </div>
                     </form>
                 </div>
@@ -61,15 +54,15 @@
 </body>
 
 @section Scripts{
-        <script src="~/Content/jquery/jquery.min.js"></script>
-        <script src="~/Content/sweetalert/sweetalert.min.js"></script>  
-        <script src="~/Content/assets/plugins/bootstrap/js/bootstrap.js"></script>  
-        <link href="~/Content/sweetalert/sweetalert.css" rel="stylesheet" />    
-        <script src="~/Content/datatables/jquery.dataTables.min.js"></script>
-        <link href="~/Content/datatables/jquery.dataTables.min.css" rel="stylesheet" />
-        @*<script src="~/Scripts/Admin/Submited/SubmitedScript.js"></script>*@
-        <script src="~/Scripts/SubmitedMaster/RetrievingSubmiteds.js"></script>
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+    <script src="~/Content/jquery/jquery.min.js"></script>
+    <script src="~/Content/sweetalert/sweetalert.min.js"></script>
+    <script src="~/Content/assets/plugins/bootstrap/js/bootstrap.js"></script>
+    <link href="~/Content/sweetalert/sweetalert.css" rel="stylesheet" />
+    <script src="~/Content/datatables/jquery.dataTables.min.js"></script>
+    <link href="~/Content/datatables/jquery.dataTables.min.css" rel="stylesheet" />
+    @*<script src="~/Scripts/Admin/TypeOvertime/TypeOvertimeScript.js"></script>*@
+    <script src="~/Scripts/TypeOvertimeMaster/RetrievingTypeOvertimes.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 

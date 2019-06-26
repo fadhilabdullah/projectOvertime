@@ -34,29 +34,32 @@ namespace Common.Repository.Application
 
         public List<DataOvertime> Get()
         {
-            var get = myContext.DataOvertimes.Include("TypeOvertime").Include("Submited").Where(x => x.IsDelete == false).ToList();
+            var get = myContext.DataOvertimes.Include("TypeOvertime").Where(x => x.IsDelete == false).ToList();
             return get;
         }
 
         public DataOvertime Get(int id)
         {
-            var get = myContext.DataOvertimes.Include("Submited").Include("TypeOvertime").SingleOrDefault(x => x.Id == id);
+            var get = myContext.DataOvertimes.Include("TypeOvertime").SingleOrDefault(x => x.Id == id);
             return get;
         }
 
         public List<DataOvertime> GetSearch(string values)
         {
-            var get = myContext.DataOvertimes.Include("Submited").Include("TypeOvertime").Where(x => (x.TypeOvertime.OvertimeType.Contains(values)|| (x.Submited.Name_Submited.Contains(values)) && x.IsDelete == false)).ToList();
+            var get = myContext.DataOvertimes.Include("TypeOvertime").Where(x => (x.TypeOvertime.Name_Type.Contains(values) && x.IsDelete == false)).ToList();
             return get;
+        }
+
+        public List<TypeOvertime> GetTypeByModule(string modulQuery)
+        {
+            return myContext.TypeOvertimes.Where(x => x.IsDelete == false && x.Name_Type.Contains(modulQuery)).ToList();
         }
 
         public bool Insert(DataOvertimeVM dataOvertimeVM)
         {
-            var push = new DataOvertime(dataOvertimeVM);
-            var getSubmitedId = myContext.Submiteds.Find(dataOvertimeVM.Submited_Id);
-            push.Submited = getSubmitedId;
+            var push = new DataOvertime(dataOvertimeVM);            
             var getTypeId = myContext.TypeOvertimes.Find(dataOvertimeVM.Type_Id);
-            if (getSubmitedId != null)
+            if (getTypeId != null)
             {
                 push.TypeOvertime = getTypeId;
                 myContext.DataOvertimes.Add(push);
@@ -79,12 +82,10 @@ namespace Common.Repository.Application
 
         public bool Update(int id, DataOvertimeVM dataOvertimeVM)
         {
-            var put = Get(id);
-            var getSubmited = myContext.Submiteds.Find(dataOvertimeVM.Submited_Id);
-            put.Submited = getSubmited;
+            var put = Get(id);            
             var getType = myContext.TypeOvertimes.Find(dataOvertimeVM.Type_Id);
             put.TypeOvertime = getType;
-            put.Update(id, dataOvertimeVM);
+            put.Update(dataOvertimeVM);
             myContext.Entry(put).State = EntityState.Modified;
             var result = myContext.SaveChanges();
             if (result > 0)

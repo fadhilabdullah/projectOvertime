@@ -13,6 +13,7 @@ namespace Common.Repository
         List<DataOvertime> GetSearch(string values);
         List<DataOvertime> Get();
         DataOvertime Get(int id);
+        List<TypeOvertime> GetTypeByModule(string modulQuery);
         bool Insert(DataOvertimeVM dataOvertimeVM);
         bool Update(int id, DataOvertimeVM dataOvertimeVM);
         bool Delete(int id);

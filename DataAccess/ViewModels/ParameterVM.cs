@@ -9,19 +9,19 @@ namespace DataAccess.ViewModels
     public class ParameterVM
     {
         public int Id { get; set; }
-        public DateTimeOffset Long_Time { get; set; }
+        public string Long_Time { get; set; }
         public double Pay { get; set; }
 
-        public ParameterVM(DateTimeOffset time, double pay)
+        public ParameterVM(string long_time, double pay)
         {
-            this.Long_Time = time;
+            this.Long_Time = long_time;
             this.Pay = pay;
         }
         public ParameterVM() { }
-        public void Update(int id, DateTimeOffset time, double pay)
+        public void Update(int id, string long_time, double pay)
         {
             this.Id = id;
-            this.Long_Time = time;
+            this.Long_Time = long_time;
             this.Pay = pay;
         }
     }

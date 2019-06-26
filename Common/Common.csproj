@@ -56,10 +56,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Application\DataOvertimeRepository.cs" />
     <Compile Include="Repository\Application\ParameterRepository.cs" />
+    <Compile Include="Repository\Application\StatusRepository.cs" />
     <Compile Include="Repository\Application\SubmitedRepository.cs" />
     <Compile Include="Repository\Application\TypeOvertimeRepository.cs" />
     <Compile Include="Repository\IDataOvertimeRepository.cs" />
     <Compile Include="Repository\IParameterRepository.cs" />
+    <Compile Include="Repository\IStatusRepository.cs" />
     <Compile Include="Repository\ISubmitedRepository.cs" />
     <Compile Include="Repository\ITypeOvertimeRepository.cs" />
   </ItemGroup>

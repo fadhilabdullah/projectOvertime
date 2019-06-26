@@ -9,16 +9,24 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    [Table("TB_M_Submited")]
+    [Table("TB_T_Submited")]
     public class Submited : BaseModel
     {
         public string Name_Submited { get; set; }
-        public string Status { get; set; }
+
+        [ForeignKey("Status")]
+        public int Status_Id { get; set; }
+        public Status Status { get; set; }
+
+        [ForeignKey("DataOvertime")]
+        public int DataOvertime_Id { get; set; }
+        public DataOvertime DataOvertime { get; set; }
 
         public Submited(SubmitedVM submitedVM)
         {
             this.Name_Submited = submitedVM.Name_Submited;
-            this.Status = submitedVM.Status;
+            this.Status_Id = submitedVM.Status_Id;
+            this.DataOvertime_Id = submitedVM.DataOvertime_Id;
             this.CreateDate = DateTime.Now.ToLocalTime();
         }
 
@@ -26,9 +34,9 @@ namespace DataAccess.Models
 
         public void Update(int id, SubmitedVM submitedVM)
         {
-            this.Id = id;
             this.Name_Submited = submitedVM.Name_Submited;
-            this.Status = submitedVM.Status;
+            this.Status_Id = submitedVM.Status_Id;
+            this.DataOvertime_Id = submitedVM.DataOvertime_Id;
             this.UpdateDate = DateTime.Now.ToLocalTime();
         }
 

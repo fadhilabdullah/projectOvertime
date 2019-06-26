@@ -1,17 +1,16 @@
 ﻿$(document).ready(function () {
-    LoadIndexSubmited();
+    LoadIndexTypeOvertime();
     $('#table').DataTable({
-        "ajax": LoadIndexSubmited()
+        "ajax": LoadIndexTypeOvertime()
     });
 })
 
 function Save() {
-    var Submited = new Object();
-    Submited.Name_Submited = $('#Name').val();
-    Submited.Status = $('#Status').val();
+    var TypeOvertime = new Object();
+    TypeOvertime.Name_Type = $('#Name').val();
     $.ajax({
-        url: "/Submiteds/InsertOrUpdate/",
-        data: Submited,
+        url: "/TypeOvertimes/InsertOrUpdate/",
+        data: TypeOvertime,
         success: function (result) {
             swal({
                 title: "Saved!",
@@ -19,20 +18,20 @@ function Save() {
                 type: "success"
             },
             function () {
-                window.location.href = '/Submiteds/Index/';
+                window.location.href = '/TypeOvertimes/Index/';
             });
-            LoadIndexSubmited();
+            LoadIndexTypeOvertime();
             $('#myModal').modal('hide');
             ClearScreen();
         }
     });
 };
 
-function LoadIndexSubmited() {
+function LoadIndexTypeOvertime() {
     $.ajax({
         type: "GET",
         async: false,
-        url: "/Submiteds/LoadSubmited/",
+        url: "/TypeOvertimes/LoadTypeOvertime/",
         dateType: "json",
         success: function (data) {
             var html = '';
@@ -40,8 +39,7 @@ function LoadIndexSubmited() {
             $.each(data, function (index, val) {
                 html += '<tr>';
                 html += '<td>' + i + '</td>';
-                html += '<td>' + val.Name_Submited + '</td>';
-                html += '<td>' + val.Status + '</td>';
+                html += '<td>' + val.Name_Type + '</td>';
                 html += '<td><a href="#" class="fa fa-pencil" onclick="return GetById(' + val.Id + ')">Edit</a>';
                 html += ' | <a href="#" class="fa fa-trash" onclick="return Delete(' + val.Id + ')">Delete</a></td>';
                 html += '</tr>';
@@ -52,27 +50,13 @@ function LoadIndexSubmited() {
     });
 }
 
-function LoadSubmitedCombo() {
-    $.ajax({
-        url: 'http://localhost:2284/API/Submiteds',
-        dataType: 'json',
-        success: function (result) {
-            var submited = $('#Submiteds');
-            $.each(result, function (i, Submited) {
-                $("<option></option>").val(Submited.Id).text(Submited.Status).appendTo(submited);
-            });
-        }
-    });
-}
-
 function Edit() {
-    var submited = new Object();
-    submited.id = $('#Id').val();
-    submited.Name_Submited = $('#Name').val();
-    submited.status = $('#Status').val();
+    var TypeOvertime = new Object();
+    TypeOvertime.id = $('#Id').val();
+    TypeOvertime.Name_Type = $('#Name').val();
     $.ajax({
-        url: "/Submiteds/InsertOrUpdate/",
-        data: submited,
+        url: "/TypeOvertimes/InsertOrUpdate/",
+        data: TypeOvertime,
         success: function (result) {
             swal({
                 title: "Saved!",
@@ -80,9 +64,9 @@ function Edit() {
                 type: "success"
             },
             function () {
-                window.location.href = '/Submiteds/Index/';
+                window.location.href = '/TypeOvertimes/Index/';
             });
-            LoadIndexSubmited();
+            LoadIndexTypeOvertime();
             $('#myModal').modal('hide');
             ClearScreen();
         }
@@ -91,14 +75,13 @@ function Edit() {
 
 function GetById(Id) {
     $.ajax({
-        url: "/Submiteds/GetById/",
+        url: "/TypeOvertimes/GetById/",
         type: "GET",
         dataType: "json",
         data: { id: Id },
         success: function (result) {
             $('#Id').val(result.Id);
-            $('#Name').val(result.Name_Submited);
-            $('#Status').val(result.Status);
+            $('#Name').val(result.Name_Type);;
 
             $('#myModal').modal('show');
             $('#Update').show();
@@ -121,7 +104,7 @@ function Delete(Id) {
         closeOnConfirm: false
     }, function () {
         $.ajax({
-            url: "/Submiteds/Delete/",
+            url: "/TypeOvertimes/Delete/",
             data: { id: Id },
             success: function (response) {
                 swal({
@@ -130,7 +113,7 @@ function Delete(Id) {
                     type: "success"
                 },
                     function () {
-                        window.location.href = '/Submiteds/Index/';
+                        window.location.href = '/TypeOvertimes/Index/';
                     });
             },
             error: function (response) {

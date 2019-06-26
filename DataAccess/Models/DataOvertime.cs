@@ -13,16 +13,13 @@ namespace DataAccess.Models
     public class DataOvertime : BaseModel
     {
         public double Pay_Overtime { get; set; }
-        public DateTimeOffset Start_Overtime { get; set; }
-        public DateTimeOffset End_Overtime { get; set; }
+        public DateTimeOffset Date { get; set; }
+        public DateTimeOffset Start_Time { get; set; }
+        public DateTimeOffset End_Time { get; set; }
         public string Attachment_Overtime { get; set; }
         public string Description { get; set; }
         public string Activity { get; set; }
         public int Employee_Id { get; set; }
-
-        [ForeignKey("Submited")]
-        public int Submited_Id { get; set; }
-        public Submited Submited { get; set; }
 
         [ForeignKey("TypeOvertime")]
         public int Type_Id { get; set; }
@@ -31,30 +28,29 @@ namespace DataAccess.Models
         public DataOvertime(DataOvertimeVM dataovertimeVM)
         {
             this.Pay_Overtime = dataovertimeVM.Pay_Overtime;
-            this.Start_Overtime = dataovertimeVM.Start_Overtime;
-            this.End_Overtime = dataovertimeVM.End_Overtime;
+            this.Date = dataovertimeVM.Date;
+            this.Start_Time = dataovertimeVM.Start_Time;
+            this.End_Time = dataovertimeVM.End_Time;
             this.Attachment_Overtime = dataovertimeVM.Attachment_Overtime;
             this.Description = dataovertimeVM.Description;
             this.Activity = dataovertimeVM.Activity;
-            this.Employee_Id = dataovertimeVM.Employee_Id;
-            this.Submited_Id = dataovertimeVM.Submited_Id;
+            this.Employee_Id = dataovertimeVM.Employee_Id;            
             this.Type_Id = dataovertimeVM.Type_Id;
             this.CreateDate = DateTime.Now.ToLocalTime();
         }
 
         public DataOvertime() { }
 
-        public void Update(int id, DataOvertimeVM dataovertimeVM)
+        public void Update(DataOvertimeVM dataovertimeVM)
         {
-            this.Id = id;
             this.Pay_Overtime = dataovertimeVM.Pay_Overtime;
-            this.Start_Overtime = dataovertimeVM.Start_Overtime;
-            this.End_Overtime = dataovertimeVM.End_Overtime;
+            this.Date = dataovertimeVM.Date;
+            this.Start_Time = dataovertimeVM.Start_Time;
+            this.End_Time = dataovertimeVM.End_Time;
             this.Attachment_Overtime = dataovertimeVM.Attachment_Overtime;
             this.Description = dataovertimeVM.Description;
             this.Activity = dataovertimeVM.Activity;
-            this.Employee_Id = dataovertimeVM.Employee_Id;
-            this.Submited_Id = dataovertimeVM.Submited_Id;
+            this.Employee_Id = dataovertimeVM.Employee_Id;            
             this.Type_Id = dataovertimeVM.Type_Id;
             this.UpdateDate = DateTime.Now.ToLocalTime();
         }

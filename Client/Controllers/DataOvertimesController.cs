@@ -1,4 +1,5 @@
 ﻿using Core.Base;
+using DataAccess.Models;
 using DataAccess.ViewModels;
 using Newtonsoft.Json;
 using System;
@@ -11,18 +12,19 @@ using System.Web.Mvc;
 
 namespace Client.Controllers
 {
+    [Authorize]
     public class DataOvertimesController : Controller
-    {
+    {        
         BaseLink get = new BaseLink();
         // GET: DataOvertimes
         public ActionResult Index()
         {
             return View(LoadDataOvertime());
         }
-
+        
         public JsonResult LoadDataOvertime()
         {
-            IEnumerable<DataOvertimeVM> dataOvertimeVM = null;
+            IEnumerable<DataOvertime> dataOvertime = null;
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:2284/api/");
             var responseTask = client.GetAsync("DataOvertimes");
@@ -30,16 +32,16 @@ namespace Client.Controllers
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readTask = result.Content.ReadAsAsync<IList<DataOvertimeVM>>();
+                var readTask = result.Content.ReadAsAsync<IList<DataOvertime>>();
                 readTask.Wait();
-                dataOvertimeVM = readTask.Result;
+                dataOvertime = readTask.Result;
             }
             else
             {
-                dataOvertimeVM = Enumerable.Empty<DataOvertimeVM>();
+                dataOvertime = Enumerable.Empty<DataOvertime>();
                 ModelState.AddModelError(string.Empty, "Server error try after some time.");
             }
-            return Json(dataOvertimeVM, JsonRequestBehavior.AllowGet);
+            return Json(dataOvertime, JsonRequestBehavior.AllowGet);
             //IEnumerable<DataOvertimeVM> dataOvertimeVM = null;
             //var client = new HttpClient
             //{
@@ -106,6 +108,31 @@ namespace Client.Controllers
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:2284/api/");
             var result = client.DeleteAsync("DataOvertimes/" + id).Result;
+        }
+
+        public JsonResult GetTypeProject()
+        {
+            IEnumerable<TypeOvertime> item = null;
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri(get.link)
+            };
+            var responseTask = client.GetAsync("TypeOvertimes");
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsAsync<IList<TypeOvertime>>();
+                readTask.Wait();
+                item = readTask.Result;
+            }
+            else
+            {
+                item = Enumerable.Empty<TypeOvertime>();
+                ModelState.AddModelError(string.Empty, "Server error");
+            }
+
+            return Json(item, JsonRequestBehavior.AllowGet);
         }
     }
 }

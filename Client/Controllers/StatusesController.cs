@@ -13,109 +13,109 @@ using System.Web.Mvc;
 
 namespace Client.Controllers
 {
-    public class SubmitedsController : Controller
+    public class StatussController : Controller
     {
         BaseLink get = new BaseLink();
 
-        // GET: Submiteds
+        // GET: Statuss
         public ActionResult Index()
         {
-            return View(LoadSubmited());
+            return View(LoadStatus());
         }
 
-        public JsonResult LoadSubmited()
+        public JsonResult LoadStatus()
         {
-            IEnumerable<Submited> submited = null;
+            IEnumerable<Status> Status = null;
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:2284/api/");
-            var responseTask = client.GetAsync("Submiteds");
+            var responseTask = client.GetAsync("Statuses");
             responseTask.Wait();
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readTask = result.Content.ReadAsAsync<IList<Submited>>();
+                var readTask = result.Content.ReadAsAsync<IList<Status>>();
                 readTask.Wait();
-                submited = readTask.Result;
+                Status = readTask.Result;
             }
             else
             {
-                submited = Enumerable.Empty<Submited>();
+                Status = Enumerable.Empty<Status>();
                 ModelState.AddModelError(string.Empty, "Server error try after some time.");
             }
-            return Json(submited, JsonRequestBehavior.AllowGet);
+            return Json(Status, JsonRequestBehavior.AllowGet);
 
-            //IEnumerable<SubmitedVM> submitedVM = null;
+            //IEnumerable<StatusVM> StatusVM = null;
             //var client = new HttpClient
             //{
             //    BaseAddress = new Uri(get.link)
             //};
-            //var responseTask = client.GetAsync("Submiteds");        //untuk nama controller yg di API
+            //var responseTask = client.GetAsync("Statuss");        //untuk nama controller yg di API
             //responseTask.Wait();
             //var result = responseTask.Result;
             //if (result.IsSuccessStatusCode)
             //{
-            //    var readTask = result.Content.ReadAsAsync<IList<SubmitedVM>>();
+            //    var readTask = result.Content.ReadAsAsync<IList<StatusVM>>();
             //    readTask.Wait();
-            //    submitedVM = readTask.Result;
+            //    StatusVM = readTask.Result;
             //}
             //else
             //{
-            //    submitedVM = Enumerable.Empty<SubmitedVM>();
+            //    StatusVM = Enumerable.Empty<StatusVM>();
             //    ModelState.AddModelError(string.Empty, "Server Error");
             //}
-            //return Json(submitedVM, JsonRequestBehavior.AllowGet);
+            //return Json(StatusVM, JsonRequestBehavior.AllowGet);
         }
 
-        public void InsertOrUpdate(SubmitedVM submitedVM)
+        public void InsertOrUpdate(StatusVM StatusVM)
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:2284/api/");
-            var myContent = JsonConvert.SerializeObject(submitedVM);
+            var myContent = JsonConvert.SerializeObject(StatusVM);
             var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            if (submitedVM.Id.Equals(0))
+            if (StatusVM.Id.Equals(0))
             {
-                var result = client.PostAsync("Submiteds", byteContent).Result;
+                var result = client.PostAsync("Statuses", byteContent).Result;
             }
             else
             {
-                var result = client.PutAsync("Submiteds/" + submitedVM.Id, byteContent).Result;
+                var result = client.PutAsync("Statuses/" + StatusVM.Id, byteContent).Result;
             }
         }
 
         public JsonResult GetById(int id)
         {
-            SubmitedVM submitedVM = null;
+            StatusVM StatusVM = null;
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:2284/api/");
-            var responseTask = client.GetAsync("Submiteds/" + id);
+            var responseTask = client.GetAsync("Statuses/" + id);
             responseTask.Wait();
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readTask = result.Content.ReadAsAsync<SubmitedVM>();
+                var readTask = result.Content.ReadAsAsync<StatusVM>();
                 readTask.Wait();
-                submitedVM = readTask.Result;
+                StatusVM = readTask.Result;
             }
             else
             {
                 // try to find something
             }
-            return Json(submitedVM, JsonRequestBehavior.AllowGet);
+            return Json(StatusVM, JsonRequestBehavior.AllowGet);
         }
 
         public void Delete(int id)
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:2284/api/");
-            var result = client.DeleteAsync("Submiteds/" + id).Result;
+            var result = client.DeleteAsync("Statuses/" + id).Result;
         }
 
         public ActionResult SelectCategory()
         {
             List<SelectListItem> ItemStatus = new List<SelectListItem>();
-            ItemStatus.Add(new SelectListItem { Text = "Accept", Value = "0"});
+            ItemStatus.Add(new SelectListItem { Text = "Accept", Value = "0" });
             ItemStatus.Add(new SelectListItem { Text = "Decline", Value = "1", Selected = true });
 
             ViewBag.StatusType = ItemStatus;

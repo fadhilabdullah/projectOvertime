@@ -13,109 +13,109 @@ using System.Web.Mvc;
 
 namespace Client.Controllers
 {
-    public class SubmitedsController : Controller
+    public class TypeOvertimesController : Controller
     {
         BaseLink get = new BaseLink();
 
-        // GET: Submiteds
+        // GET: TypeOvertimes
         public ActionResult Index()
         {
-            return View(LoadSubmited());
+            return View(LoadTypeOvertime());
         }
 
-        public JsonResult LoadSubmited()
+        public JsonResult LoadTypeOvertime()
         {
-            IEnumerable<Submited> submited = null;
+            IEnumerable<TypeOvertime> TypeOvertime = null;
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:2284/api/");
-            var responseTask = client.GetAsync("Submiteds");
+            var responseTask = client.GetAsync("TypeOvertimes");
             responseTask.Wait();
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readTask = result.Content.ReadAsAsync<IList<Submited>>();
+                var readTask = result.Content.ReadAsAsync<IList<TypeOvertime>>();
                 readTask.Wait();
-                submited = readTask.Result;
+                TypeOvertime = readTask.Result;
             }
             else
             {
-                submited = Enumerable.Empty<Submited>();
+                TypeOvertime = Enumerable.Empty<TypeOvertime>();
                 ModelState.AddModelError(string.Empty, "Server error try after some time.");
             }
-            return Json(submited, JsonRequestBehavior.AllowGet);
+            return Json(TypeOvertime, JsonRequestBehavior.AllowGet);
 
-            //IEnumerable<SubmitedVM> submitedVM = null;
+            //IEnumerable<TypeOvertimeVM> TypeOvertimeVM = null;
             //var client = new HttpClient
             //{
             //    BaseAddress = new Uri(get.link)
             //};
-            //var responseTask = client.GetAsync("Submiteds");        //untuk nama controller yg di API
+            //var responseTask = client.GetAsync("TypeOvertimes");        //untuk nama controller yg di API
             //responseTask.Wait();
             //var result = responseTask.Result;
             //if (result.IsSuccessStatusCode)
             //{
-            //    var readTask = result.Content.ReadAsAsync<IList<SubmitedVM>>();
+            //    var readTask = result.Content.ReadAsAsync<IList<TypeOvertimeVM>>();
             //    readTask.Wait();
-            //    submitedVM = readTask.Result;
+            //    TypeOvertimeVM = readTask.Result;
             //}
             //else
             //{
-            //    submitedVM = Enumerable.Empty<SubmitedVM>();
+            //    TypeOvertimeVM = Enumerable.Empty<TypeOvertimeVM>();
             //    ModelState.AddModelError(string.Empty, "Server Error");
             //}
-            //return Json(submitedVM, JsonRequestBehavior.AllowGet);
+            //return Json(TypeOvertimeVM, JsonRequestBehavior.AllowGet);
         }
 
-        public void InsertOrUpdate(SubmitedVM submitedVM)
+        public void InsertOrUpdate(TypeOvertimeVM TypeOvertimeVM)
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:2284/api/");
-            var myContent = JsonConvert.SerializeObject(submitedVM);
+            var myContent = JsonConvert.SerializeObject(TypeOvertimeVM);
             var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            if (submitedVM.Id.Equals(0))
+            if (TypeOvertimeVM.Id.Equals(0))
             {
-                var result = client.PostAsync("Submiteds", byteContent).Result;
+                var result = client.PostAsync("TypeOvertimes", byteContent).Result;
             }
             else
             {
-                var result = client.PutAsync("Submiteds/" + submitedVM.Id, byteContent).Result;
+                var result = client.PutAsync("TypeOvertimes/" + TypeOvertimeVM.Id, byteContent).Result;
             }
         }
 
         public JsonResult GetById(int id)
         {
-            SubmitedVM submitedVM = null;
+            TypeOvertimeVM TypeOvertimeVM = null;
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:2284/api/");
-            var responseTask = client.GetAsync("Submiteds/" + id);
+            var responseTask = client.GetAsync("TypeOvertimes/" + id);
             responseTask.Wait();
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readTask = result.Content.ReadAsAsync<SubmitedVM>();
+                var readTask = result.Content.ReadAsAsync<TypeOvertimeVM>();
                 readTask.Wait();
-                submitedVM = readTask.Result;
+                TypeOvertimeVM = readTask.Result;
             }
             else
             {
                 // try to find something
             }
-            return Json(submitedVM, JsonRequestBehavior.AllowGet);
+            return Json(TypeOvertimeVM, JsonRequestBehavior.AllowGet);
         }
 
         public void Delete(int id)
         {
             var client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:2284/api/");
-            var result = client.DeleteAsync("Submiteds/" + id).Result;
+            var result = client.DeleteAsync("TypeOvertimes/" + id).Result;
         }
 
         public ActionResult SelectCategory()
         {
             List<SelectListItem> ItemStatus = new List<SelectListItem>();
-            ItemStatus.Add(new SelectListItem { Text = "Accept", Value = "0"});
+            ItemStatus.Add(new SelectListItem { Text = "Accept", Value = "0" });
             ItemStatus.Add(new SelectListItem { Text = "Decline", Value = "1", Selected = true });
 
             ViewBag.StatusType = ItemStatus;

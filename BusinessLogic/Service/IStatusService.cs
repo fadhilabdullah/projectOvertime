@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Service
 {
-    public interface ITypeOvertimeService
+    public interface IStatusService
     {
-        List<TypeOvertime> Get();
-        TypeOvertime Get(int id);
-        bool Insert(TypeOvertimeVM typeovertimeVM);
-        bool Update(int id, TypeOvertimeVM typeovertimeVM);
+        List<Status> Get();
+        Status Get(int id);
+        List<Status> GetSearch(string values);
+        bool Insert(StatusVM statusVM);
+        bool Update(int id, StatusVM statusVM);
         bool Delete(int id);
     }
 }

@@ -41,11 +41,11 @@ namespace BusinessLogic.Service.Application
             {
                 return status;
             }
-            else if (string.IsNullOrWhiteSpace(Convert.ToString(dataOvertimeVM.Start_Overtime)))
+            else if (string.IsNullOrWhiteSpace(Convert.ToString(dataOvertimeVM.Start_Time)))
             {
                 return status;
             }
-            else if (string.IsNullOrWhiteSpace(Convert.ToString(dataOvertimeVM.End_Overtime)))
+            else if (string.IsNullOrWhiteSpace(Convert.ToString(dataOvertimeVM.End_Time)))
             {
                 return status;
             }
@@ -69,11 +69,11 @@ namespace BusinessLogic.Service.Application
             {
                 return status;
             }
-            else if (string.IsNullOrWhiteSpace(Convert.ToString(dataOvertimeVM.Start_Overtime)))
+            else if (string.IsNullOrWhiteSpace(Convert.ToString(dataOvertimeVM.Start_Time)))
             {
                 return status;
             }
-            else if (string.IsNullOrWhiteSpace(Convert.ToString(dataOvertimeVM.End_Overtime)))
+            else if (string.IsNullOrWhiteSpace(Convert.ToString(dataOvertimeVM.End_Time)))
             {
                 return status;
             }
@@ -101,6 +101,11 @@ namespace BusinessLogic.Service.Application
             {
                 return dataOvertime.Delete(id);
             }
+        }
+
+        public List<TypeOvertime> GetTypeModule(string modulQuery)
+        {
+            return dataOvertime.GetTypeByModule(modulQuery);
         }
     }
 }

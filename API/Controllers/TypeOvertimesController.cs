@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using DataAccess.Context;
 using DataAccess.Models;
 using BusinessLogic.Service;
+using DataAccess.ViewModels;
 
 namespace API.Controllers
 {
@@ -26,102 +27,116 @@ namespace API.Controllers
             iTypeOvertimeService = _iTypeOvertimeService;
         }
 
-        public List<TypeOvertime> GetParameter()
+        public HttpResponseMessage GetTypeOvertimes()
         {
-            return iTypeOvertimeService.Get();
+            try
+            {
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                var result = iTypeOvertimeService.Get();
+                if (result != null)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
 
         // GET: api/TypeOvertimes/5
-        [ResponseType(typeof(TypeOvertime))]
-        public IHttpActionResult GetTypeOvertime(int id)
+        public HttpResponseMessage GetTypeOvertime(int id)
         {
-            TypeOvertime typeOvertime = db.TypeOvertimes.Find(id);
-            if (typeOvertime == null)
+            try
             {
-                return NotFound();
+                var message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                var result = iTypeOvertimeService.Get(id);
+                if (result != null)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return message;
             }
-
-            return Ok(typeOvertime);
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
 
         // PUT: api/TypeOvertimes/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutTypeOvertime(int id, TypeOvertime typeOvertime)
+        public HttpResponseMessage PutUpdateTypeOvertime(int id, TypeOvertimeVM typeovertimeVM)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != typeOvertime.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(typeOvertime).State = EntityState.Modified;
-
             try
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TypeOvertimeExists(id))
+                var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+
+                var getTypeOvertime = db.TypeOvertimes.Find(id);
+                if (getTypeOvertime == null)
                 {
-                    return NotFound();
+                    message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
                 }
                 else
                 {
-                    throw;
+                    var result = iTypeOvertimeService.Update(id, typeovertimeVM);
+                    if (result)
+                    {
+                        message = Request.CreateResponse(HttpStatusCode.OK, result);
+                    }
                 }
+                return message;
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
 
         // POST: api/TypeOvertimes
-        [ResponseType(typeof(TypeOvertime))]
-        public IHttpActionResult PostTypeOvertime(TypeOvertime typeOvertime)
+        public HttpResponseMessage InsertTypeOvertime(TypeOvertimeVM typeovertimeVM)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+                var result = iTypeOvertimeService.Insert(typeovertimeVM);
+                if (result)
+                {
+                    message = Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                return message;
             }
-
-            db.TypeOvertimes.Add(typeOvertime);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = typeOvertime.Id }, typeOvertime);
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
+            }
         }
 
         // DELETE: api/TypeOvertimes/5
-        [ResponseType(typeof(TypeOvertime))]
-        public IHttpActionResult DeleteTypeOvertime(int id)
+        public HttpResponseMessage DeleteTypeOvertime(int id)
         {
-            TypeOvertime typeOvertime = db.TypeOvertimes.Find(id);
-            if (typeOvertime == null)
+            try
             {
-                return NotFound();
+                var message = Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bad Request");
+
+                var getTypeOvertime = db.TypeOvertimes.Find(id);
+                if (getTypeOvertime == null)
+                {
+                    message = Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                }
+                else
+                {
+                    var result = iTypeOvertimeService.Delete(id);
+                    if (result)
+                    {
+                        message = Request.CreateResponse(HttpStatusCode.OK, result);
+                    }
+                }
+                return message;
             }
-
-            db.TypeOvertimes.Remove(typeOvertime);
-            db.SaveChanges();
-
-            return Ok(typeOvertime);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            catch
             {
-                db.Dispose();
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal Server Error");
             }
-            base.Dispose(disposing);
-        }
-
-        private bool TypeOvertimeExists(int id)
-        {
-            return db.TypeOvertimes.Count(e => e.Id == id) > 0;
         }
     }
 }

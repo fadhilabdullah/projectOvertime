@@ -22,10 +22,17 @@ namespace API
             //this is for Repository 
             container.RegisterType<IDataOvertimeRepository, DataOvertimeRepository>();
             container.RegisterType<ISubmitedRepository, SubmitedRepository>();
+            container.RegisterType<IParameterRepository, ParameterRepository>();
+            container.RegisterType<ITypeOvertimeRepository, TypeOvertimeRepository>();
+            container.RegisterType<IStatusRepository, StatusRepository>();
+
 
             //this is for Service
             container.RegisterType<IDataOvertimeService, DataOvertimeService>();
             container.RegisterType<ISubmitedService, SubmitedService>();
+            container.RegisterType<IParameterService, ParameterService>();
+            container.RegisterType<ITypeOvertimeService, TypeOvertimeService>();
+            container.RegisterType<IStatusService, StatusService>();
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

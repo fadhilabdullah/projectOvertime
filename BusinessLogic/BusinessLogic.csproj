@@ -56,10 +56,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Application\DataOvertimeService.cs" />
     <Compile Include="Service\Application\ParameterService.cs" />
+    <Compile Include="Service\Application\StatusService.cs" />
     <Compile Include="Service\Application\SubmitedService.cs" />
     <Compile Include="Service\Application\TypeOvertimeService.cs" />
     <Compile Include="Service\IDataOvertimeService.cs" />
     <Compile Include="Service\IParameterService.cs" />
+    <Compile Include="Service\IStatusService.cs" />
     <Compile Include="Service\ISubmitedService.cs" />
     <Compile Include="Service\ITypeOvertimeService.cs" />
   </ItemGroup>

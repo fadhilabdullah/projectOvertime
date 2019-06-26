@@ -13,6 +13,7 @@ namespace BusinessLogic.Service
         List<DataOvertime> GetSearch(string values);
         List<DataOvertime> Get();
         DataOvertime Get(int id);
+        List<TypeOvertime> GetTypeModule(string modulQuery);
         bool Insert(DataOvertimeVM dataOvertimeVM);
         bool Update(int id, DataOvertimeVM dataOvertimeVM);
         bool Delete(int id);

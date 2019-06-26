@@ -26,7 +26,7 @@ function LoadIndexDataOvertime() {
                 html += '<td>' + val.Activity + '</td>';
                 html += '<td>' + val.Submited.Name_submited + '</td>';
                 html += '<td>' + val.TypeOvertime.OvertimeType + '</td>';
-                html += '<td>' + '<a.haref="#" class="fa fa-pencil" onclick=return GetById(' + val.Id + ')">Edit<tr>';              //line 21 dan 22 untuk kolom action di table
+                html += '<td>' + val.Action +'<a.haref="#" class="fa fa-pencil" onclick=return GetById(' + val.Id + ')">Edit<tr>';              //line 21 dan 22 untuk kolom action di table
                 html += ' | <a href="#" class="fa fa-trash" onclick=return Delete(' + val.Id + ')">Delete</a></td>';
                 html += '</tr>';
                 i++;

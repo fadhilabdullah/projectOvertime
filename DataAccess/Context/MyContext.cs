@@ -16,5 +16,6 @@ namespace DataAccess.Context
         public DbSet<DataOvertime> DataOvertimes { get; set; }
         public DbSet<Parameter> Parameters { get; set; }
         public DbSet<TypeOvertime> TypeOvertimes { get; set; }
+        public DbSet<Status> Statuses { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace DataAccess.Models
     [Table("TB_M_Parameter")]
     public class Parameter : BaseModel
     {
-        public DateTimeOffset Long_Time { get; set; }
+        public string Long_Time { get; set; }
         public double Pay { get; set; }
 
         public Parameter(ParameterVM parameterVM)
@@ -25,7 +25,6 @@ namespace DataAccess.Models
         public Parameter() { }
         public void Update(ParameterVM parameterVM)
         {
-            this.Id = parameterVM.Id;
             this.Long_Time = parameterVM.Long_Time;
             this.Pay = parameterVM.Pay;
             this.UpdateDate = DateTimeOffset.Now.LocalDateTime;

@@ -45,6 +45,13 @@ namespace Common.Repository.Application
             return get;
         }
 
+        public List<Parameter> GetSearch(string values)
+        {
+            var get = myContext.Parameters.Where
+               (X => (X.Pay.ToString().Contains(values) && X.IsDelete == false)).ToList();
+            return get;
+        }
+
         public bool Insert(ParameterVM parameterVM)
         {
             var push = new Parameter(parameterVM);

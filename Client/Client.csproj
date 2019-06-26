@@ -214,7 +214,10 @@
     <Compile Include="Controllers\DataOvertimesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ParametersController.cs" />
+    <Compile Include="Controllers\StatusesController.cs" />
     <Compile Include="Controllers\SubmitedsController.cs" />
+    <Compile Include="Controllers\TypeOvertimesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -3604,10 +3607,14 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\ParameterMaster\RetrievingParameters.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\DataOvertimeMaster\RetrievingDataOvertimes.js" />
+    <Content Include="Scripts\StatusMaster\RetrievingStatuses.js" />
+    <Content Include="Scripts\SubmitedMaster\DataTable.js" />
     <Content Include="Scripts\SubmitedMaster\RetrievingSubmiteds.js" />
+    <Content Include="Scripts\TypeOvertimeMaster\RetrievingTypeOvertimes.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -3647,6 +3654,9 @@
     <Content Include="Views\DataOvertimes\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutAdministrator.cshtml" />
     <Content Include="Views\Shared\_LayoutEmployee.cshtml" />
+    <Content Include="Views\Parameters\Index.cshtml" />
+    <Content Include="Views\TypeOvertimes\Index.cshtml" />
+    <Content Include="Views\Statuses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
